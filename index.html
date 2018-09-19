@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Drawing like Corot</title>
+	<link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+	<div id="app">
+		<div id="tools" class="toolbar vertical-bar"></div>
+        <div id="manage" class="toolbar"></div> <!-- manage: doing undo, redo, and delete options -->
+        
+        <div id="canvas-placer"><canvas id="canvas" width="1280" height="454"></canvas></div>
+        
+		<div id="colors" class="toolbar horizontal-bar">
+            <div id="palette">
+                <div class="colour" style="background-color:#b7802d"></div>
+                <div class="colour" style="background-color:#e0b145"></div>
+                <div class="colour" style="background-color:#abcff2"></div>
+                <div class="colour" style="background-color:#16a7b7"></div>
+                <div class="colour" style="background-color:#2c7733"></div>
+                <div class="colour" style="background-color:#86af7e"></div>
+            </div>
+        </div>
+        <div id="tool-selection-feedback" class="toolbar"></div>
+	</div>
+	<script type="text/javascript" src="script/script.js"></script>
+</body>
+</html>

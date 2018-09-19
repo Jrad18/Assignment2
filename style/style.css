@@ -1,0 +1,87 @@
+body {
+    height: 100vh;
+    background-image: url('../img/BGI-country.jpg');
+    background-size: cover;
+    margin: 0px;
+}
+
+/*
+ *  Grid structure: 
+ *  - 5 rows (6 border-lines)
+ *  - 7 columns (8 border-lines)
+ */
+#app{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100px auto 300px 130px 150px auto 250px;
+    grid-template-rows: 100px auto 60% auto 150px;
+}
+
+#tools {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#manage {
+    grid-column-start: 3;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#colors {
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 3;
+    grid-column-end: 6;
+}
+
+#canvas-placer{
+    grid-row-start: 2;
+    grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 8;
+}
+
+canvas {
+    border-color: white;
+}
+
+.toolbar {
+    background-color: #E8C269;
+    margin: 10px;
+}
+
+#tool-selection-feedback {
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 7;
+    grid-column-end: 8;
+}
+
+/* colour toolbar */
+#palette {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.colour {
+    height: 35px;
+    width: 35px;
+    display: inline-block;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #ffffff;
+}
+
+.colour.active {
+    height: 40px;
+    width: 40px;
+    border-color: #000000;
+}
