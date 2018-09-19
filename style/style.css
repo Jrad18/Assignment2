@@ -13,30 +13,10 @@ body {
 #app{
     height: 100%;
     display: grid;
-    grid-template-columns: 100px auto 300px 130px 150px auto 250px;
-    grid-template-rows: 100px auto 60% auto 150px;
+    grid-template-columns: 75px auto 300px 130px 150px auto 250px;
+    grid-template-rows: 65px auto 60% auto 150px;
 }
 
-#tools {
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 2;
-}
-
-#manage {
-    grid-column-start: 3;
-    grid-column-end: 6;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-#colors {
-    grid-row-start: 5;
-    grid-row-end: 6;
-    grid-column-start: 3;
-    grid-column-end: 6;
-}
 
 #canvas-placer{
     grid-row-start: 2;
@@ -50,11 +30,11 @@ canvas {
 }
 
 .toolbar {
-    background-color: #E8C269;
+    background-color: rgba(232, 194, 105, 0.70);
     margin: 10px;
 }
 
-#tool-selection-feedback {
+#selection-feedback {
     grid-row-start: 5;
     grid-row-end: 6;
     grid-column-start: 7;
@@ -62,18 +42,56 @@ canvas {
 }
 
 /* colour toolbar */
+#colours {
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 3;
+    grid-column-end: 6;
+    display: grid;
+    grid-template-columns: 150px auto;
+}
+
+/* colour choice part */
+#colour-choice {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+}
+
+.colour-choice-button {
+    padding: 5px 15px;
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.colour-choice-button.active {
+    background-color: #277fdd;
+}
+
+/* palette part */
 #palette {
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    grid-column-start: 2;
+    grid-column-end: 3;
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#colours #palette break{
+    flex-basis: 100%;
+    width: 0px; 
+    height: 0px; 
+    overflow: hidden;
 }
 
 .colour {
     height: 35px;
     width: 35px;
-    display: inline-block;
     border-radius: 50%;
     border-style: solid;
     border-width: 5px;
@@ -81,7 +99,56 @@ canvas {
 }
 
 .colour.active {
-    height: 40px;
-    width: 40px;
-    border-color: #000000;
+    border-color: #69e8cf;
 }
+
+.colour:hover {
+    transform: scale(1.1);
+}
+
+#selected-colour {
+    width: 80px;
+    height: 40px;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 3px;
+}
+
+#selected-colour-category {
+    width: 80px;
+    height: 40px;
+}
+
+/* 
+ *   manage horizontal bar (undo, redo, delete)
+ */
+#manage {
+    grid-column-start: 3;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.option {
+    height: 35px;
+    width: 35px;
+}
+
+/*
+ *  tool vertical bar (brush, eraser)
+ */
+#tools {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

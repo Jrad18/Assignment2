@@ -1,8 +1,22 @@
 var linePoints = [];
+var canvasState = [];
 var canvas = document.querySelector('#canvas');
 var context = canvas.getContext('2d');
 
+//set default tool selection
+var toolMode = 'draw';
+
+//set default value of colour stroke
+var colourCategorySelected = 'Flat';
 var colourSelected = '#b7802d';
+
+var feedbackColourCate = document.querySelector('#selected-colour-category');
+var feedbackColour = document.querySelector('#selected-colour');
+var feedbackTool = document.querySelector('#selected-tool');
+
+//populate default values into feedback
+feedbackColour.style.backgroundColor = colourSelected;
+feedbackColourCate.innerHTML = colourCategorySelected;
 
 context.strokeStyle = colourSelected;
 context.lineWidth = 5;
@@ -15,7 +29,8 @@ canvas.addEventListener('mouseup', stop);
 //canvas.addEventListener('touchend', stop);
 window.addEventListener( 'mouseup', stop );
 
-document.querySelector('#colors').addEventListener('click', selectTool);
+document.querySelector('#tools').addEventListener('click', selectTool);
+document.querySelector('#colours').addEventListener('click', selectColour);
 
 function draw( e ) {
     e.preventDefault();
@@ -24,10 +39,12 @@ function draw( e ) {
         var mouseY = e.pageY - canvas.offsetTop;
         var mouseDrag = e.type === 'mousemove';  // determine if the point being added is the start or continuation of a line
         //console.log(e);
+        if ( e.type === 'mousedown' ) { saveState(); }
+        
         canvas.addEventListener( 'mousemove', draw );
         window.addEventListener( 'mousemove', draw );
     
-        linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag } );
+        linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected } );
     
         updateCanvas(); // request canvas to update
     }
@@ -41,33 +58,64 @@ function stop( e ) {
 
 function updateCanvas() {
     context.clearRect( 0, 0, canvas.width, canvas.height );
+    context.putImageData( canvasState, 0, 0 );
     renderLine();
 }
 
 function renderLine() {
     for ( var i = 0, length = linePoints.length; i < length; i++ ) {
         if ( !linePoints[i].drag ) {
-            context.stroke();
+            //context.stroke();
             context.beginPath();
+            context.strokeStyle = linePoints[i].colour;
             context.moveTo( linePoints[i].x, linePoints[i].y );
             context.lineTo( linePoints[i].x + 0.5, linePoints[i].y + 0.5 );
         } else {
             context.lineTo( linePoints[i].x, linePoints[i].y );
         }
     }
+    if ( toolMode === 'erase' ) {
+    } 
+    else {
+    }
     context.stroke();
 }
 
-function selectTool(e) {
-    console.log(e.target);
-    console.log(e.currentTarget);
-    
-    if ( e.target === e.currentTarget ) return;
-    highlightButton(e.target);
+function saveState() {
+    canvasState = context.getImageData( 0, 0, canvas.width, canvas.height );
+    linePoints = [];
 }
 
-function highlightButton( button ) {
-    var buttons = button.parentNode.querySelectorAll( '.colour' );
-    buttons.forEach( function( element ){ element.classList.remove('active') } );
+//select tool, manage and colour
+function selectTool(e){
+    if (e.target === e.currentTarget) { return; }
+//    toolMode = e.target.dataset.mode || toolMode;
+}
+
+function selectColour(e) {   
+    if (e.target === e.currentTarget) { return; }
+    if (e.target.className === 'colour') {
+        colourSelected = e.target.dataset.color || colourSelected;
+        
+        highlightColour(e.target);
+        feedbackColour.style.backgroundColor = colourSelected;
+    }
+    if (e.target.className === 'colour-choice-button') { 
+        colourCategorySelected = e.target.dataset.cate || colourCategorySelected;
+        
+        highlightColourChoice(e.target); 
+        feedbackColourCate.innerHTML = colourCategorySelected;
+    }
+}
+
+function highlightColour( button ) {
+    var buttons = button.parentNode.querySelectorAll('.colour');
+    buttons.forEach( function( element ){ element.classList.remove('active'); } );
+    button.classList.add('active');
+}
+
+function highlightColourChoice ( button ) {
+    var buttons = button.parentNode.querySelectorAll('.colour-choice-button');
+    buttons.forEach( function( element ){ element.classList.remove('active'); } );
     button.classList.add('active');
 }
