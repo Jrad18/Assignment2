@@ -11,6 +11,7 @@ var toolSize = 5;
 
 //set default value of colour stroke
 var colourSelected = '#b7802d';
+var shadowSelected = 1;
 var colourCategorySelected = 'Flat';
 
 var feedbackColourCate = document.querySelector('#selected-colour-category');
@@ -39,7 +40,6 @@ document.querySelector('#colours').addEventListener('click', selectColour);
 
 
 function draw( e ) {
-<<<<<<< HEAD
 	e.preventDefault();
 	
 	var mouseX = e.changedTouches[0].pageX - canvas.offsetLeft;
@@ -52,7 +52,7 @@ function draw( e ) {
 	window.addEventListener( 'touchmove', draw , {passive: false});
 		
 
-	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected } );
+	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected, shadow: shadowSelected } );
 
 	updateCanvas(); // request canvas to update
 
@@ -80,6 +80,7 @@ function renderLine() {
             context.beginPath();
             context.lineWidth = linePoints[i].width;
             context.strokeStyle = linePoints[i].colour;
+			context.globalAlpha = linePoints[i].shadow;
             context.moveTo( linePoints[i].x, linePoints[i].y );
             context.lineTo( linePoints[i].x + 0.5, linePoints[i].y + 0.5 );
         } else {
@@ -124,7 +125,15 @@ function selectColour(e) {
         
         highlightColour(e.target);
         feedbackColour.style.backgroundColor = colourSelected;
+		//select shading
+		if (e.target.id === 'shadow') {
+			shadowSelected = e.target.dataset.shadow || shadowSelected;
+			
+			highlightshadow(e.target);
+			feedbackColour.style.backgroundColor = shadowSelected;
+		}
     }
+	
     
     // select colour type
     if (e.target.className === 'colour-choice-button') { 
@@ -153,6 +162,12 @@ function highlightTool(button) {
 
 function highlightColour(button) {
     var buttons = button.parentNode.querySelectorAll('.colour');
+    buttons.forEach( function( element ){ element.classList.remove('active'); } );
+    button.classList.add('active');
+}
+
+function highlightColour(button) {
+    var buttons = button.parentNode.querySelectorAll('.colour#shadow');
     buttons.forEach( function( element ){ element.classList.remove('active'); } );
     button.classList.add('active');
 }
