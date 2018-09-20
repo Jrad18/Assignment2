@@ -42,9 +42,7 @@ function draw( e ) {
 	
 	canvas.addEventListener( 'touchmove', draw , {passive: false});
 	window.addEventListener( 'touchmove', draw , {passive: false});
-	
-	console.log(mouseX);
-	
+		
 
 	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected } );
 
@@ -124,4 +122,11 @@ function highlightColourChoice ( button ) {
     var buttons = button.parentNode.querySelectorAll('.colour-choice-button');
     buttons.forEach( function( element ){ element.classList.remove('active'); } );
     button.classList.add('active');
+}
+
+function clearCanvas (){
+	canvasState = [];
+	//linePoints = [];
+	updateCanvas();
+	console.log('clear');
 }
