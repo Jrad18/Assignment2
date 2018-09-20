@@ -1,6 +1,6 @@
 var linePoints = [];
 var canvasState = [];
-var canvas = document.querySelector('#canvas');
+var canvas = document.getElementsByTagName("canvas")[0];
 var context = canvas.getContext('2d');
 
 //set default tool selection
@@ -23,37 +23,42 @@ context.lineWidth = 5;
 context.lineJoin = 'round';
 context.lineCap = 'round';
 
-canvas.addEventListener('mousedown', draw);
-//canvas.addEventListener('touchstart', draw);
-canvas.addEventListener('mouseup', stop);
-//canvas.addEventListener('touchend', stop);
-window.addEventListener( 'mouseup', stop );
+//Event Listeners
+canvas.addEventListener('touchstart', draw, {passive: false});
+canvas.addEventListener('touchend', stop, {passive: false});
 
 document.querySelector('#tools').addEventListener('click', selectTool);
 document.querySelector('#colours').addEventListener('click', selectColour);
 
+
 function draw( e ) {
-    e.preventDefault();
-    if ( e.which === 1 ) {
-        var mouseX = e.pageX - canvas.offsetLeft;
-        var mouseY = e.pageY - canvas.offsetTop;
-        var mouseDrag = e.type === 'mousemove';  // determine if the point being added is the start or continuation of a line
-        //console.log(e);
-        if ( e.type === 'mousedown' ) { saveState(); }
-        
-        canvas.addEventListener( 'mousemove', draw );
-        window.addEventListener( 'mousemove', draw );
-    
-        linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected } );
-    
-        updateCanvas(); // request canvas to update
-    }
+	e.preventDefault();
+	
+	var mouseX = e.changedTouches[0].pageX - canvas.offsetLeft;
+	var mouseY = e.changedTouches[0].pageY - canvas.offsetTop;
+	var mouseDrag = e.type === 'touchmove';  // determine if the point being added is the start or continuation of a line
+	
+	if ( e.type === 'touchstart' ) { saveState(); }
+	
+	canvas.addEventListener( 'touchmove', draw , {passive: false});
+	window.addEventListener( 'touchmove', draw , {passive: false});
+	
+	console.log(mouseX);
+	
+
+	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected } );
+
+	updateCanvas(); // request canvas to update
+
 }
 
 function stop( e ) {
 //    console.log(e);
-    canvas.removeEventListener( 'mousemove', draw );
-    window.removeEventListener( 'mousemove', draw );
+    canvas.style.touchAction = 'auto';
+	
+
+    canvas.removeEventListener( 'touchmove', draw );
+    window.removeEventListener( 'touchmove', draw );
 }
 
 function updateCanvas() {
@@ -84,6 +89,7 @@ function renderLine() {
 function saveState() {
     canvasState = context.getImageData( 0, 0, canvas.width, canvas.height );
     linePoints = [];
+	
 }
 
 //select tool, manage and colour
