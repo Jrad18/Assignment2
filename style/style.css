@@ -37,6 +37,11 @@ canvas {
     margin: 10px;
 }
 
+.toolbar .option.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 #selection-feedback {
     grid-row-start: 5;
     grid-row-end: 6;
@@ -68,14 +73,17 @@ canvas {
     padding: 5px 15px;
     background-color: aliceblue;
     border-radius: 5px;
+    font-weight: 700;
+    color: #565b5b;
 }
 
 .colour-choice-button.active {
     background-color: #277fdd;
+    color: #ffffff;
 }
 
 /* palette part */
-#palette {
+.palette {
     grid-column-start: 2;
     grid-column-end: 3;
     display: flex;
@@ -85,11 +93,15 @@ canvas {
     flex-wrap: wrap;
 }
 
-#colours #palette break{
+#colours .palette break{
     flex-basis: 100%;
     width: 0px; 
     height: 0px; 
     overflow: hidden;
+}
+
+.palette.non-active {
+    display: none;
 }
 
 .colour {
@@ -102,13 +114,14 @@ canvas {
 }
 
 .colour.active {
-    border-color: #69e8cf;
+    border-color: #4B0082;
 }
 
-.colour:hover {
+.colour:hover, .option:hover {
     transform: scale(1.1);
 }
 
+/* feedback box3 */
 #selected-colour {
     width: 80px;
     height: 40px;
@@ -120,6 +133,19 @@ canvas {
 #selected-colour-category {
     width: 80px;
     height: 40px;
+}
+
+/* toolbar icons */
+.option {
+    height: 35px;
+    width: 35px;
+    padding: 3px;
+}
+
+.option.active {
+    border: solid 2.3px;
+    border-radius: 50%;
+    transform: scale(1.1);
 }
 
 /* 
@@ -136,13 +162,13 @@ canvas {
     align-items: center;
 }
 
-.option {
-    height: 35px;
-    width: 35px;
+.option.disabled{
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 /*
- *  tool vertical bar (brush, eraser)
+ *  vertical tool bar (brush, eraser)
  */
 #tools {
     grid-row-start: 3;
@@ -150,8 +176,11 @@ canvas {
     grid-column-start: 1;
     grid-column-end: 2;
     
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
 }
-
