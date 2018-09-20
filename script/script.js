@@ -19,6 +19,8 @@ var feedbackColour = document.querySelector('#selected-colour');
 var feedbackTool = document.querySelector('#selected-tool');
 var feedbackSize = document.querySelector('#selected-size');
 
+let t = setTimeout(clearCanvas, 5000);
+
 //populate default values into feedback
 feedbackColour.style.backgroundColor = colourSelected;
 feedbackColourCate.innerHTML = colourCategorySelected;
@@ -39,6 +41,7 @@ document.querySelector('#manage').addEventListener('click', selectTool);
 document.querySelector('#colours').addEventListener('click', selectColour);
 
 
+
 function draw( e ) {
 	e.preventDefault();
 	
@@ -55,6 +58,8 @@ function draw( e ) {
 	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected, shadow: shadowSelected } );
 
 	updateCanvas(); // request canvas to update
+	clearTimeout(t);
+	
 
 }
 
@@ -65,6 +70,7 @@ function stop( e ) {
 
     canvas.removeEventListener( 'touchmove', draw );
     window.removeEventListener( 'touchmove', draw );
+	t = setTimeout(clearCanvas, 5000);
 }
 
 function updateCanvas() {
@@ -130,7 +136,7 @@ function selectColour(e) {
 			shadowSelected = e.target.dataset.shadow || shadowSelected;
 			
 			highlightshadow(e.target);
-			feedbackColour.style.backgroundColor = shadowSelected;
+			feedbackColour.style.opacity = shadowSelected;
 		}
     }
 	
@@ -180,7 +186,7 @@ function highlightColourChoice (button) {
 
 function clearCanvas (){
 	canvasState = [];
-	//linePoints = [];
+    //saveState();
 	updateCanvas();
 	console.log('clear');
 }
