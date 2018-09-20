@@ -19,7 +19,7 @@ var feedbackColour = document.querySelector('#selected-colour');
 var feedbackTool = document.querySelector('#selected-tool');
 var feedbackSize = document.querySelector('#selected-size');
 
-let t = setTimeout(clearCanvas, 5000);
+let t = setTimeout(clearCanvas, 300000);
 
 //populate default values into feedback
 feedbackColour.style.backgroundColor = colourSelected;
@@ -55,7 +55,7 @@ function draw( e ) {
 	window.addEventListener( 'touchmove', draw , {passive: false});
 		
 
-	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected, shadow: shadowSelected } );
+	linePoints.push( { x: mouseX, y: mouseY, drag: mouseDrag, colour: colourSelected, shadow: shadowSelected, width: toolSize } );
 
 	updateCanvas(); // request canvas to update
 	clearTimeout(t);
@@ -70,7 +70,7 @@ function stop( e ) {
 
     canvas.removeEventListener( 'touchmove', draw );
     window.removeEventListener( 'touchmove', draw );
-	t = setTimeout(clearCanvas, 5000);
+	t = setTimeout(clearCanvas, 300000);
 }
 
 function updateCanvas() {
@@ -113,6 +113,8 @@ function selectTool(e){
     if (e.target === e.currentTarget) { return; }
     toolMode = e.target.dataset.mode || toolMode;
     toolSize = e.target.dataset.size || toolSize;
+	
+	console.log(toolSize);
     
     if(e.target.dataset.mode) { highlightTool(e.target); }
     
