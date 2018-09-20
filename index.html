@@ -8,10 +8,13 @@
 <body>
 	<div id="app">
 		<div id="tools" class="toolbar vertical-bar">
-            <img class="option" src="img/tool-logo/erase.png" />
+            <img class="option" data-mode="draw" data-size="5" src="img/tool-logo/brush-sml.png"/>
+            <img class="option" data-mode="draw" data-size="10" src="img/tool-logo/brush-med.png"/>
+            <img class="option" data-mode="draw" data-size="20" src="img/tool-logo/brush-lrg.png" />
+            <img class="option" data-mode="erase" data-size="10" src="img/tool-logo/erase.png" />
         </div>
         <div id="manage" class="toolbar"> <!-- manage: doing undo, redo, and delete options --> 
-            <img class="option" src="img/tool-logo/undo.png" />
+            <img class="option" data-action="undo" src="img/tool-logo/undo.png" />
         </div>
         
         <div id="canvas-placer"><canvas id="canvas" width="1280" height="454"></canvas></div>
@@ -21,7 +24,7 @@
                 <div class="colour-choice-button active" data-cate="Flat">Flat</div>
                 <div class="colour-choice-button" data-cate="Texture">Texture</div>
             </div>
-            <div id="palette">
+            <div id="Flat" class="palette">
                 
                     <div class="colour" data-color="#b7802d" style="background-color:#b7802d"></div>
                     <div class="colour" data-color="#e0b145" style="background-color:#e0b145"></div>
@@ -30,6 +33,16 @@
                     <div class="colour" data-color="#2c7733" style="background-color:#2c7733"></div>
                     <div class="colour" data-color="#86af7e" style="background-color:#86af7e"></div>
                     <break></break>
+                    <div class="colour" data-color="#381e04" style="background-color:#381e04"></div>
+                    <div class="colour" data-color="#fcf935" style="background-color:#fcf935"></div>
+                    <div class="colour" data-color="#ce321a" style="background-color:#ce321a"></div>
+                    <div class="colour" data-color="#8131e2" style="background-color:#8131e2"></div>
+                    <div class="colour" data-color="#e5fafc" style="background-color:#e5fafc"></div>
+                    <div class="colour" data-color="#4e704c" style="background-color:#4e704c"></div>
+                
+            </div>
+            <div id="Texture" class="palette non-active">
+                
                     <div class="colour" style="background-color:#b7802d"></div>
                     <div class="colour" style="background-color:#e0b145"></div>
                     <div class="colour" style="background-color:#abcff2"></div>
@@ -42,7 +55,10 @@
         <div id="selection-feedback" class="toolbar">
             <div id="selected-colour-category"></div>
             <div id="selected-colour"></div>
-            <div id="selected-tool"></div>
+            <div>
+                <span id="selected-tool"></span>
+                <span id="selected-size"></span>
+            </div>
         </div>
 	</div>
 	<script type="text/javascript" src="script/script.js"></script>
